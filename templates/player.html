@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ name }}'s Profile</title>
+</head>
+<body>
+    <h1>{{ name }}'s Profile</h1>
+    <p>Elo: {{ elo }}</p>
+    <p>Maps Completed: {{ completions }}/{{total_maps}}     ({{(100*completions/total_maps)|round(2)}}%) </p>
+    <p>Rank: {{ rank }}</p>
+    <p>Badges:</p>
+
+
+    {% if badges[name][1] == 1 %}
+    ✧
+    
+    {% elif badges[name][1] == 2 %}
+    <a style ="color: rgb(183, 155, 0);">✦</a>
+    {% endif %}
+
+    {% if badges[name][2] == 1 %}
+    ☆
+    {% elif badges[name][2] == 2 %}
+    
+    <a style ="color: rgb(183, 155, 0);">★</a>
+    {% endif %}
+
+    {% if badges[name][3] == 1 %}
+    ✵
+    {% elif badges[name][3] == 2 %} 
+    
+    <a style ="color: rgb(183, 155, 0);">✸</a>
+    {% endif %}
+
+
+    <h2>Maps Completed</h2>
+    <ul>
+        {% for map in maps_completed %}
+            <li>{{ map }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

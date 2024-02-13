@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="{{ url_for('static', filename='style.css') }}"
+  rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Rankings</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Player Rankings</h1>
+
+    
+    <input type="text" id="searchInput" onkeyup="searchPlayers()" placeholder="Search for players...">
+    <br><br>
+    <div id="searchResults"></div>
+    <table>
+        <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Elo</th>
+            <th>Completions</th>
+        </tr>
+        {% for player in players %}
+        <tr>
+            <td>{{ player[2] }}</td>
+            <td><a href = "/player/{{player[4]}}">{{player[0]}}</a></td>
+            <td>{{ player[1]|round|int }}</td>
+            <td>{{ player[3] }} ({{(100*player[3]/total_maps)|round(2)}}%)</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <script>
+        function searchPlayers() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.querySelector("table");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1]; // Column index of player names
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
