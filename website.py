@@ -33,6 +33,7 @@ def index():
 
 @app.route('/maps')
 def mapss():
+    #return maps
     return render_template('maps.html', maps=maps.items(), maptoid = maptoid)
 
 @app.route('/maps/<int:map_id>')

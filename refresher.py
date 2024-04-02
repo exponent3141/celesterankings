@@ -2,6 +2,7 @@
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 import pickle
+from math import ceil
 spreadsheet_id = '1A88F3X2lOQJry-Da2NpnAr-w5WDrkjDtg7Wt0kLCiz8'
 # For example:
 # spreadsheet_id = "8VaaiCuZ2q09IVndzU54s1RtxQreAxgFNaUPf9su5hK0"
@@ -31,60 +32,79 @@ for i in vs[1:-1]:
                 maps[i[0]].append(players[j])
                 playerscores[players[j]].append(i[0])
 
-star = 4
+star = 7
 stars = {}
-amount = {1:0,2:0,3:0}
+amount = {1:0,2:0,3:0,4:0, 5:0, 6:0, 7:0, 8:0}
+div = {2:2, 1:2}
+map_names = []
 for i in vs[1:-1]:
-    if 'Ranked'  in i[0] or 'Alphabetical' in i[0]:
+    if i==[]:
+        posss +=1
+    elif 'Ranked'  in i[0] or 'Subtiered' in i[0]:
         star-=1
-    else:
-        stars[i[0]]= [star]
-        amount[star]+=1
-
+        star = ceil(star)
+        posss = 1
+        if 'Ranked' in i[0]:
+            divided = False
+        else:
+            divided = True
         
-def starfunction(star, rank):
-    #amount = {1:23, 2:11, 3:7}
+    else:
+        map_names.append(i[0])
+        stars[i[0]]= [star]
+        if not divided:
+            stars[i[0]].append(posss)
+            posss+=1
+        else:
+            stars[i[0]].append(posss)
+        amount[star]+=1
+        
+for i in amount.keys():
+    if i not in div:
+        div[i] = amount[i]
 
-    rangeStart = {1: 1, 2: 2, 3: 4} #starting point of each range
-    rangeLen = {1: 100, 2: 100, 3: 100} #untested i wouldn't change this if i were you
-
-    amountFix = [0, amount[1], amount[1]+amount[2]] #, ...
-
-    if star == 1:
-        return rangeStart[1]*rangeLen[1]
-
-    rRank = ((len(maps)) - (rank))-amountFix[star-1] #???
-    return (rangeStart[star] + (1/(amount[star]-1))*rRank)*rangeLen[star]
-
-
-
-
-
-for j,i in enumerate(stars.keys()):
-    stars[i].append(j+1)
-    stars[i].append(starfunction(stars[i][0], stars[i][1]))
-    stars[i].append(len(maps[i]))
+def getElo(star, nDiv, pos):
+    '''star is the star ranking of the map (duh)
+    nDiv is the number of divisions of this star ranking
+    pos is the position of the map within the divisions, 1<=pos<=nDiv, 1 is highest rated (hardest). 
+    ....did i actually just use a docstring as intended
+    f'''
+    ratings = {1:(100,200), 2:(300,400), 3:(500,750), 4:(800,1000), 5:(0,0), 6:(0,0)}
+    
+    try:
+        posFix = nDiv-pos
+        rRange = ratings[star][1] - ratings[star][0]
+        return ratings[star][0] + ((rRange/(nDiv-1))*(posFix) if nDiv != 1 else rRange//2)
+    except KeyError:
+        raise KeyError(f'You need to add data for {star} star to the ratings dict! (you idiot)')
 
 
-playerelo = {i:[0] for i in players}
+eloo = {}
+for i in stars.keys():
+    b_s, b_p = stars[i]
+    eloo[i] = getElo(b_s, div[b_s], b_p)
+
+
+playerelo = {i:[0,0] for i in players}
 player_names = list(playerelo.keys())
-map_names = list(maps.keys())
 nametoid = {player_names[i]:i for i in range(len(player_names))}
-
 maptoid = {map_names[i]:i for i in range(len(map_names))}
-
 badges = {i:{} for i in player_names}
-playerstarcount = {i:{1:0, 2:0, 3:0} for i in player_names}
+playerstarcount = {i:{1:0, 2:0, 3:0,4:0} for i in player_names}
 
 
 for mapy, mapp in maps.items():
     for pl in mapp:
-        playerelo[pl][0]+=stars[mapy][-2]
         playerstarcount[pl][stars[mapy][0]]+=1
 
 for i in playerscores.items():
-    playerelo[i[0]].append(len(i[1]))
-
+    cancercoefficient = 1
+   # pissmap = sorted(i[1], key=lambda a: eloo[a])
+    for dmap in i[1]:
+        playerelo[i[0]][0]+=eloo[dmap]*cancercoefficient
+        playerelo[i[0]][1]+=1
+        cancercoefficient*=0.90
+print(playerelo['snoot'])
 for i in player_names:
     subject = playerstarcount[i]
     if subject[1]>0:
@@ -127,6 +147,8 @@ for i in range(len(ranked_players)):
     ranked_players[i].append(nametoid[ranked_players[i][0]])
 
 
+
+#name, elo, rank, number of maps completed, id
 thf = []
 for i in range(100):
     try:
@@ -139,6 +161,18 @@ for i in range(len(map_names)):
         thr[map_names[i]]=thf[i]
     except:
         print(f"trhow at {i}")
+for j, i in enumerate(map_names):
+    stars[i].append(eloo[i])
+    try:
+        stars[i].append(len(maps[i]))
+    except:
+        stars[i].append(0)
+    stars[i][1] = j+1
+
+
+for i in ranked_players:
+    print(f"#{i[2]}: {i[0]} elo: {i[1]}")
+print(stars)
 with open('players.pkl', 'wb') as f:
           pickle.dump(ranked_players, f)
 with open('maps.pkl', 'wb') as f:
@@ -154,6 +188,7 @@ with open('Lmaps.pkl', 'wb') as f:
 
 with open('badges.pkl', 'wb') as f:
     pickle.dump(badges,f)
+
 
 
 # Output:

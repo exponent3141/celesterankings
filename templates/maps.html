@@ -1,72 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>map Rankings</title>
+    <title>Player Rankings</title>
     <style>
         table {
             border-collapse: collapse;
             width: 100%;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid black;
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #f2f2f2;
         }
     </style>
-    <link href="{{ url_for('static', filename='style.css') }}"
-    rel="stylesheet">
 </head>
-<body>
-    <h1>map Rankings</h1>
-    <input type="text" id="searchInput" onkeyup="searchMaps()" placeholder="Search for maps...">
+
+<body onload="changeFirstguy()">
+    <nav>
+        <div id="inputgarbage">
+            <input type="text" id="searchInput" onkeyup="searchPlayers()" placeholder="Search for maps...">
+        </div>
+        <div id="filler">
+        </div>
+        <div id="box3">
+            <div id="box2">
+
+                <div id="box">
+                    <a href='/about'> About </a>
+                </div>
+                <div id="box">
+                    <a href='/maps'> Maps </a>
+                </div>
+                <div id="box">
+                    <a href='/'>Players</a>
+                </div>
+            </div>
+        </div>
+    </nav>
     <br><br>
     <div id="searchResults"></div>
-    <table>
-        <tr>
-            <th>Rank</th>
+    <div id="center">
+        <div id="circlegarbage">
 
-            <th>Name</th>
-            <th>Points for completion</th>
-            <th>Stars</th>
-            <th>Completions</th>
-
-            
-            
-        </tr>
-        {% for map in maps %}
-        <tr>
-            <td>{{ map[1][1] }}</td>
-            <td><a href = "/maps/{{maptoid[map[0]]}}">{{ map[0] }}</a></td>
-            <td>{{ map[1][2]|round|int }}</td>
-            <td>{{ map[1][0] }}</td>
-            <td>{{ map[1][3] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+            <div id="circlegarbage4">
+                <div id="circlegarbage3">
+                    <div id="circlegarbage2">
+                        <h1 id="map">Map</h1>
+                        <h1>Rankings:</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="wrapper">
+            <div id="centerstuff1">
+                {% for map in maps %}
+                <div class="playerrank" id="{{ map[1][1] }}">
+                    <div id="random">
+                        <a>{{ map[1][1] }}</a>
+                    </div>
+                    <div id="random6">
+                        <a>{{ map[0]}}</a>
+                    </div>
+                    <div id="random2">
+                        <a> {{ map[1][2]|round|int }}</a>
+                    </div>
+                    <div id="random3">
+                        <a> {{ map[1][0] }}</a>
+                    </div>
+                    <div id="random4">
+                        <a> {{ map[1][3] }}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    </div>
     <script>
-        function searchMaps() {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("searchInput");
-            filter = input.value.toUpperCase();
-            table = document.querySelector("table");
-            tr = table.getElementsByTagName("tr");
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[1]; // Column index of player names
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
+        function changeFirstguy() {
+            const first = document.getElementById('1')
+            const firstchildren = first.getElementsByTagName('div')
+            first.style.border = "0.4vh solid #F0A27A"
+            first.style.borderRadius = "0px"
+            firstchildren[0].style.borderRight = "0.4vh solid #F0A27A"
+            firstchildren[1].style.borderRight = "0.4vh solid #F0A27A"
+            firstchildren[2].style.borderRight = "0.4vh solid #F0A27A"
+            firstchildren[3].style.borderRight = "0.4vh solid #F0A27A"
+            const second = document.getElementById('2')
+            const secondchildren = second.getElementsByTagName('div')
+            second.style.border = "0.4vh solid #E68789"
+            secondchildren[0].style.borderRight = "0.4vh solid #E68789"
+            secondchildren[1].style.borderRight = "0.4vh solid #E68789"
+            secondchildren[2].style.borderRight = "0.4vh solid #E68789"
+            secondchildren[3].style.borderRight = "0.4vh solid #E68789"
+            const third = document.getElementById('3')
+            const thirdchildren = third.getElementsByTagName('div')
+            third.style.border = "0.4vh solid #CE719F"
+            thirdchildren[0].style.borderRight = "0.4vh solid #CE719F"
+            thirdchildren[1].style.borderRight = "0.4vh solid #CE719F"
+            thirdchildren[2].style.borderRight = "0.4vh solid #CE719F"
+            thirdchildren[3].style.borderRight = "0.4vh solid #CE719F"
         }
+        window.onload(changeFirstguy())
     </script>
 </body>
+
 </html>
