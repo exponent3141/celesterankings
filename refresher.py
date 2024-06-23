@@ -19,7 +19,7 @@ thmb = service.spreadsheets().get(spreadsheetId=spreadsheet_id,fields="sheets/da
 vs = sheet_props['values']
 players = vs[0][3:]
 maps = {}
-playerscores = {i:[] for i in players} 
+playerscores = {i:[] for i in players}
 
 
 
@@ -38,7 +38,7 @@ amount = {1:0,2:0,3:0,4:0, 5:0, 6:0, 7:0, 8:0}
 div = {2:2, 1:2}
 map_names = []
 for i in vs[1:-1]:
-    
+
     if i==[]:
         posss +=1
 
@@ -46,9 +46,9 @@ for i in vs[1:-1]:
         star-=1
         star = ceil(star)
         posss = 1
-        
+
         divided = True
-        
+
     else:
         if star <=3:
             map_names.append(i[0])
@@ -60,7 +60,7 @@ for i in vs[1:-1]:
             else:
                 stars[i[0]].append(posss)
             amount[star]+=1
-        
+
 for i in amount.keys():
     if i not in div:
         div[i] = amount[i]
@@ -68,11 +68,11 @@ for i in amount.keys():
 def getElo(star, nDiv, pos):
     '''star is the star ranking of the map (duh)
     nDiv is the number of divisions of this star ranking
-    pos is the position of the map within the divisions, 1<=pos<=nDiv, 1 is highest rated (hardest). 
+    pos is the position of the map within the divisions, 1<=pos<=nDiv, 1 is highest rated (hardest).
     ....did i actually just use a docstring as intended
     f'''
     ratings = {1:(100,200), 2:(300,400), 3:(500,600), 4:(800,1000), 5:(0,0), 6:(0,0), 7:(0,0), 8:(0,0)}
-    
+
     try:
         posFix = nDiv-pos
         rRange = ratings[star][1] - ratings[star][0]
@@ -130,7 +130,7 @@ for i in player_names:
     else:
         badges[i][3]=0
 
-  
+
 
 pll = sorted(list(playerelo.items()), key= lambda x: x[1][0], reverse=True)
 
