@@ -1,0 +1,81 @@
+
+
+.input textarea {
+display: inline-block;
+background: #fff;
+border-radius: 31px;
+font-family: 'Poppins', sans-serif;font-size: 20px;
+font-size: 18px;
+color: #67595E;
+line-height: 1.2;
+padding: 19px 35px 0 35px;
+min-height: 150px;
+box-sizing: border-box;
+
+resize: none;
+border-color: #E8b4b8;
+  outline-color: #E8b4b8;
+  border-width: 3px;
+  border: 1;
+  outline: 0;
+}
+.setting{
+  text-align: center;
+  margin-top:10%;
+}
+
+.output {
+    background-color: #242729;
+    word-wrap: break-word;
+    color: white;
+    font-family: 'Poppins', sans-serif;font-size: 20px;
+
+}
+.submitbutton {
+background-color: #E8B4B8;
+border: none;
+color: white;
+padding: 20px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+width:120px;
+border-radius: 22px;
+margin-left: 20px;
+margin-right: 20px;
+font-family: 'Poppins', sans-serif;font-size: 20px;
+}
+
+select {
+  /* Reset */
+
+  margin-top: 4%;
+  appearance: none;
+  border: 0;
+  outline: 0;
+font-family: 'Poppins', sans-serif;font-size: 20px;
+  /* Personalize */
+  width: 20em;
+  height: 3em;
+  padding: 0 4em 0 1em;
+  background: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg)
+      no-repeat right 0.8em center / 1.4em,
+    linear-gradient(to left, rgba(255, 255, 255, 0.3) 3em, rgba(255, 255, 255, 0.2) 3em);
+  color: #E8b4b8;
+  border-radius: 0.25em;
+  box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  /* <option> colors */
+  option {
+    color: #320a28;
+    background-color: #320a28;
+  }
+  /* Remove focus outline */
+  &:focus {
+    outline: none;
+  }
+  /* Remove IE arrow */
+  &::-ms-expand {
+    display: none;
+  }
+}

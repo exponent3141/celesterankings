@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+<html lang="en">
+
+  <head>
+
+    <title>stAk CTF</title>
+  </head>
+
+  <body>
+
+    <!-- Display logged in/out navbar -->
+
+    {% if auth == "0" %}
+
+    {% include 'nav.html' %}
+
+    {% else %}
+
+    {% include 'navL.html' %}
+
+    {% endif %}
+
+    {% block content %}
+
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')
+      }}">
+    <link rel="stylesheet" href="{{ url_for('static',
+      filename='css/auth/auth.css') }}">
+
+
+
+    <h1 style="text-align:center; margin-top:5%">This action requires
+      authentication.</h1>
+
+    <form method="POST" action="/register">
+      {{form.hidden_tag()}}
+      <div style="width: 30%; margin:auto; margin-top:5%">
+
+        <!-- Email field -->
+        {{wtf.form_field(form.email)}}
+
+        <!-- Username and password fields -->
+        {{wtf.form_field(form.username)}}
+        {{wtf.form_field(form.password)}}
+
+
+        <input style="margin-top:5%; width:230px" type="submit" value="Create account" class="Verify">
+
+      </div>
+
+    </form>
+
+    <p style="text-align:center; margin-top:1%"> {{lg}} </p>
+    <p style="margin-left:5%"> {{ success }}</p>
+    <p style="text-align:center; margin-top:1%">Note: All accounts must undergo
+      manual verification by staff. This may
+      take up to 3 days.</h1>
+
+    {% endblock %}
+  </body>
+
+</html>

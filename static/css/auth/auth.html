@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+<html lang="en">
+<head>
+
+    <title>stAk CTF</title>
+</head>
+<body>
+
+  {% if auth == "0" %}
+    {% include 'nav.html' %}
+
+  {% else %}
+    {% include 'navL.html' %}
+
+  {% endif %}
+  {% block content %}
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/auth/auth.css') }}">
+
+    <h1 style="text-align:center; margin-top:5%">This action requires authentication.</h1>
+      <form method="POST" action="/authenticate">
+        {{form.hidden_tag()}}
+        <div style="width: 30%; margin:auto; margin-top:5%">
+
+        {{wtf.form_field(form.username)}}
+        {{wtf.form_field(form.password)}}
+
+        <p style = "text-align:center">Status: {{ lg }}</p>
+
+        {{wtf.form_field(form.remember)}}
+        <input style = "margin-top:5%" type="submit" value="Verify" class="Verify">
+        <button  class = "Verify" onclick="location.href='/register'" style = "width:140px">Register</button>
+
+        </div>
+
+	  </form>
+
+    <p style = "margin-left:10%"> {{ success }}</p>
+  {% endblock %}
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')
+      }}">
+    <title>stAk CTF</title>
+  </head>
+
+
+  <body>
+
+    <!-- Display logged in/out navbar -->
+    {% if current_user.is_authenticated %}
+
+    {% include 'navL.html' %}
+
+    {% else %}
+
+    {% include 'nav.html' %}
+
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+
+
+    <h1 style="margin-top: 15%; text-align:center">Error 404. Page not found.</h1>
+    <p style="margin: 5%; text-align:center">
+      It looks like the URL you are trying to reach doesn't exist.
+    </p>
+
+    <p style="position: fixed; bottom:0;text-align:center; width:100%"><a
+        href="/"> Return home</p>
+
+    </body>
+
+  </html>

@@ -1,0 +1,63 @@
+.Verify {
+  background-color: #E8B4B8;
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  width: 100px;
+  border-radius: 22px;
+  margin-left: 0;
+  margin-right: 30px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+}
+
+
+.Verify:hover {
+  background: #eed6d3;
+
+}
+
+.form-control {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  border-radius: 22px;
+  font-size: 18px;
+  outline: 0;
+  border: 1px solid;
+  border-width: medium;
+  margin: 10px;
+  color: #242729;
+  border-color: #E8b4b8;
+  padding-left: 10px;
+
+}
+
+.control-label {
+  background-color: #242729;
+  word-wrap: break-word;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+}
+
+.checkbox {
+  background-color: #242729;
+  word-wrap: break-word;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+}
+
+.help-block {
+  word-wrap: break-word;
+  font-family: 'Poppins', sans-serif;
+  font-size: 17px;
+
+}
+
+#menu {
+  margin: 8px;
+}

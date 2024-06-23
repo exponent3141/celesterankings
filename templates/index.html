@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link href="{{ url_for('static', filename='style.css') }}"
-  rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Player Rankings</title>
@@ -11,58 +11,109 @@
             border-collapse: collapse;
             width: 100%;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid black;
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #f2f2f2;
         }
     </style>
 </head>
-<body>
-    <h1>Player Rankings</h1>
 
-    
-    <input type="text" id="searchInput" onkeyup="searchPlayers()" placeholder="Search for players...">
+<body onload="changeFirstguy()">
+    <nav>
+        <div id="inputgarbage">
+            <input type="text" id="searchInput" onkeyup="searchPlayers()" placeholder="Search for players...">
+        </div>
+        <div id="filler">
+        </div>
+        <div id="box3">
+            <div id="box2">
+                    <div id="box">
+                        <a href='/about'> About </a>
+                    </div>
+                    <div id="box">
+                        <a href='/maps'> Maps </a>
+                    </div>
+                    <div id="box">
+                        <a href='/'>Players</a>
+                    </div>
+            </div>
+        </div>
+    </nav>
     <br><br>
     <div id="searchResults"></div>
-    <table>
-        <tr>
-            <th>Rank</th>
-            <th>Name</th>
-            <th>Elo</th>
-            <th>Completions</th>
-        </tr>
-        {% for player in players %}
-        <tr>
-            <td>{{ player[2] }}</td>
-            <td><a href = "/player/{{player[4]}}">{{player[0]}}</a></td>
-            <td>{{ player[1]|round|int }}</td>
-            <td>{{ player[3] }} ({{(100*player[3]/total_maps)|round(2)}}%)</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div id="center">
+        <div id="circlegarbage">
+
+            <div id="circlegarbage4">
+                <div id="circlegarbage3">
+                    <div id="circlegarbage2">
+                        <h1>Player</h1>
+                        <h1>Rankings:</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="wrapper">
+            <div id="centerstuff">
+                {% for player in players %}
+                <div class="playerrank" id="{{ player[2] }}">
+                    <div id="random">
+                        <a>{{ player[2] }}</a>
+                    </div>
+                    <div id="random1">
+                        <a>{{player[0]}}</a>
+                    </div>
+                    <div id="random2">
+                        <a> Elo: {{ player[1]|round|int }}</a>
+                    </div>
+                    <div id="random3">
+                        <a> {{ player[3] }} ({{(100*player[3]/total_maps)|round(2)}}%)</a>
+                    </div>
+                    <div id="random4">
+                        <a href="/player/{{player[4]}}">Profile</a>
+                        <img src="{{url_for('static', filename='external-link-svgrepo-com.svg')}}" width="15px"
+                            height="15px" />
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    </div>
     <script>
-        function searchPlayers() {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("searchInput");
-            filter = input.value.toUpperCase();
-            table = document.querySelector("table");
-            tr = table.getElementsByTagName("tr");
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[1]; // Column index of player names
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
+        function changeFirstguy() {
+            const first = document.getElementById('1')
+            const firstchildren = first.getElementsByTagName('div')
+            first.style.border = "0.4vh solid #F0A27A"
+            first.style.borderRadius = "0px"
+            firstchildren[0].style.borderRight = "0.4vh solid #F0A27A"
+            firstchildren[1].style.borderRight = "0.4vh solid #F0A27A"
+            firstchildren[2].style.borderRight = "0.4vh solid #F0A27A"
+            firstchildren[3].style.borderRight = "0.4vh solid #F0A27A"
+            const second = document.getElementById('2')
+            const secondchildren = second.getElementsByTagName('div')
+            second.style.border = "0.4vh solid #E68789"
+            secondchildren[0].style.borderRight = "0.4vh solid #E68789"
+            secondchildren[1].style.borderRight = "0.4vh solid #E68789"
+            secondchildren[2].style.borderRight = "0.4vh solid #E68789"
+            secondchildren[3].style.borderRight = "0.4vh solid #E68789"
+            const third = document.getElementById('3')
+            const thirdchildren = third.getElementsByTagName('div')
+            third.style.border = "0.4vh solid #CE719F"
+            thirdchildren[0].style.borderRight = "0.4vh solid #CE719F"
+            thirdchildren[1].style.borderRight = "0.4vh solid #CE719F"
+            thirdchildren[2].style.borderRight = "0.4vh solid #CE719F"
+            thirdchildren[3].style.borderRight = "0.4vh solid #CE719F"
         }
+        window.onload(changeFirstguy())
     </script>
 </body>
+
 </html>
