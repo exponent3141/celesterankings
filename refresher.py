@@ -3,6 +3,7 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 import pickle
 from math import ceil
+from random import randint
 spreadsheet_id = '1A88F3X2lOQJry-Da2NpnAr-w5WDrkjDtg7Wt0kLCiz8'
 # For example:
 # spreadsheet_id = "8VaaiCuZ2q09IVndzU54s1RtxQreAxgFNaUPf9su5hK0"
@@ -86,6 +87,8 @@ for i in stars.keys():
 
 
 playerelo = {i:[0,0] for i in players}
+playereloRat = {i:[0,0] for i in players}
+
 player_names = list(playerelo.keys())
 nametoid = {player_names[i]:i for i in range(len(player_names))}
 maptoid = {map_names[i]:i for i in range(len(map_names))}
@@ -97,6 +100,7 @@ for mapy, mapp in maps.items():
     for pl in mapp:
         playerstarcount[pl][stars[mapy][0]]+=1
 
+
 for i in playerscores.items():
     cancercoefficient = 1
    # pissmap = sorted(i[1], key=lambda a: eloo[a])
@@ -104,6 +108,10 @@ for i in playerscores.items():
         playerelo[i[0]][0]+=eloo[dmap]*cancercoefficient
         playerelo[i[0]][1]+=1
         cancercoefficient*=0.90
+
+    playereloRat[i[0]][0] = randint(1,999)
+    playereloRat[i[0]][1] = randint(1,50)
+
 print(playerelo['snoot'])
 for i in player_names:
     subject = playerstarcount[i]
@@ -132,7 +140,6 @@ for i in player_names:
 
 pll = sorted(list(playerelo.items()), key= lambda x: x[1][0], reverse=True)
 
-
 rank = 1
 prev_elo = None
 ranked_players = []
@@ -145,6 +152,21 @@ for i, (name, elo) in enumerate(pll):
 
 for i in range(len(ranked_players)):
     ranked_players[i].append(nametoid[ranked_players[i][0]])
+
+#bro idk what this code is doing 😋
+pllLeaEdition = sorted(list(playereloRat.items()), key= lambda x: x[1][0], reverse=True)
+leaified_players = []
+ratRank = 1
+prelo_rat = None
+for i, (name, elo) in enumerate(pllLeaEdition):
+    if elo[0] != prelo_rat:
+        ratRank = i + 1
+    leaified_players.append([name, elo[0], ratRank, elo[1]])
+    playereloRat[name].append(rank)
+    prelo_rat = elo[0]
+
+for i in range(len(leaified_players)):
+    leaified_players[i].append(nametoid[leaified_players[i][0]])
 
 
 
@@ -160,7 +182,7 @@ for i in range(len(map_names)):
     try:
         thr[map_names[i]]=thf[i]
     except:
-        print(f"trhow at {i}")
+        print(f"throw at {i}")
 for j, i in enumerate(map_names):
     stars[i].append(eloo[i])
     try:
@@ -175,12 +197,16 @@ for i in ranked_players:
 print(stars)
 with open('players.pkl', 'wb') as f:
           pickle.dump(ranked_players, f)
+with open('playersRandom.pkl', 'wb') as f:
+          pickle.dump(leaified_players, f)
 with open('maps.pkl', 'wb') as f:
           pickle.dump(stars, f)
 with open('playermaps.pkl', 'wb') as f:
     pickle.dump(playerscores, f)
 with open('playerstats.pkl', 'wb') as f:
     pickle.dump(playerelo, f)
+with open('playerstatsRandom.pkl', 'wb') as f:
+    pickle.dump(playereloRat, f)
 with open('mapid.pkl', 'wb') as f:
     pickle.dump(maptoid, f)
 with open('Lmaps.pkl', 'wb') as f:
